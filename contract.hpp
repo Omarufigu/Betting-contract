@@ -24,22 +24,22 @@ interface IBetting {
   }
 
   // create a new game with two teams
-  function createGame(address t1, address t2);
+  function createGame(address t1, address t2) external;
   
   // lets user place a bet on a team 
-  function placeBet(uint gameId, uint amount, address team);
+  function placeBet(uint gameId, uint amount, address team) external;
   
   // display results of the game 
-  function displayResults(uint gameId); 
+  function displayResults(uint gameId) external; 
   
   // pay out the prize to the winning team 
-  function payoutPrize(uint gameId);
+  function payoutPrize(uint gameId) external;
   
   // Cashout before the game ends
-  function cashout(uint gameId);
+  function cashout(uint gameId) external;
   
   // claim winnings after game ends
-  function claimWinnings(uint gameId);
+  function claimWinnings(uint gameId) external;
 }
 
 
