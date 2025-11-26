@@ -7,21 +7,21 @@ interface IBetting {
   event Payout(uint gameId, address winner, uint amount);
   event Cashout(uint gameId, address user, uint amount);
 
-  struct User {
-    uint betamount; // weight is accumulated by delegation
-    bool betplaced;  // if true, that person already voted
-    address owner;
-  }
-  struct Team{
-    address team;
-    uint score;
-  }
-  struct Game{
-    uint payoutpool; // funds from the betters that fund the payout
-    bool gameOver; // if true game over
-    Team team1;
-    Team team2;
-  }
+  // struct User {
+  //   uint betamount; // weight is accumulated by delegation
+  //   bool betplaced;  // if true, that person already voted
+  //   address owner;
+  // }
+  // struct Team{
+  //   address team;
+  //   uint score;
+  // }
+  // struct Game{
+  //   uint payoutpool; // funds from the betters that fund the payout
+  //   bool gameOver; // if true game over
+  //   Team team1;
+  //   Team team2;
+  // }
 
   // create a new game with two teams
   function createGame(address t1, address t2) external;
@@ -43,6 +43,9 @@ interface IBetting {
 }
 
 
+
+
+  //old code
 // contract betting{
 //   struct user {
 //     uint betamount; // weight is accumulated by delegation
