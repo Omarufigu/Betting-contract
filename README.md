@@ -1,4 +1,4 @@
-#Contributers
+# Contributers
 omar.figueroa890@myhunter.cuny.edu
 
 # Betting-contract
