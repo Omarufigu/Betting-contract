@@ -1,6 +1,6 @@
 pragma solidity >=0.4.22 <0.7.0;
 
-contract betting {
+interface IBetting {
   event GameCreated(uint gameId, address team1, address team2);
   event BetPlaced(uint gameId, address user, uint amount, address team);
   event ResultsDisplayed(uint gameId, address winner);
