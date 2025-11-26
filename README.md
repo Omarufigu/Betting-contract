@@ -3,6 +3,8 @@ Omar: omar.figueroa890@myhunter.cuny.edu
 
 Zayn: zayn.iqbal86@myhunter.cuny.edu
 
+Andre: andre.olfindo80@myhunter.cuny.edu
+
 # Betting Contract
 A contract for a sports betting system, similar to Kalshi. This site will be designed to allow for sports betting using etheruem.
 
