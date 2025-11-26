@@ -1,3 +1,6 @@
+#Contributers
+omar.figueroa890@myhunter.cuny.edu
+
 # Betting-contract
 A contract for a sports betting system, similar to Kalshi. This site will be designed to allow for sports betting using eth
 
