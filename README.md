@@ -11,7 +11,10 @@ A contract for a sports betting system, similar to Kalshi. This site will be des
 # Functionality
 
 ## Create Game
-Hosts the live game stats of two teams currently playing, opening the betting for that game.
+  -Initializes a new game between two teams.
+  -Opens the betting pool for that game.
+  -Records the teams and sets up the game in the system.
+  -Emits an event to notify frontends or other systems that a new game is available.
 
 ## Place Bet
 Places the bet on the team, with some eth amount. This bet will then have to be verified and ensured it is placed. To ensure the bet is legitimate and not fraudulent we will have to add some id and wallet verification befor the better is allowed to bet
