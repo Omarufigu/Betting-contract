@@ -12,15 +12,38 @@ A contract for a sports betting system, similar to Kalshi. This site will be des
 
 ## Create Game
   -Initializes a new game between two teams.
+  
   -Opens the betting pool for that game.
+  
   -Records the teams and sets up the game in the system.
-  -Emits an event to notify frontends or other systems that a new game is available.
+  
+  -Emits an event to notify frontends or other systems that a new game is available. 
 
 ## Place Bet
-Places the bet on the team, with some eth amount. This bet will then have to be verified and ensured it is placed. To ensure the bet is legitimate and not fraudulent we will have to add some id and wallet verification befor the better is allowed to bet
+  -Allows users to place a bet on a chosen team with a specific ETH amount.
+
+  -Bets are recorded in the contract and added to the game’s payout pool.
+
+  -Emits an event confirming the bet has been placed successfully.
 
 ## Match Results
-Displays the results of the game and the profit, if any, so that we can sednt that to the cashout.
+  -Once the game ends, the results are recorded on-chain.
+
+  -The winning team is determined, and the payout pool is calculated.
+
+  -Emits an event showing the outcome of the game and which users are eligible for winnings.
 
 ## Cashout
-Allows the payment to be converted to real cash. if a negative balance is reached, the eth owed will be drawn out of the betters account. If funds are insufficient then they will owe that amount of eth until their debt is paid off.
+  -Allows users to claim their winnings in ETH.
+
+  -Users can withdraw available winnings at any time after the game ends.
+
+  -Emits an event confirming the payout or cashout.
+
+## Payout Mechanism
+
+  -Winnings calculated proportionally based on total amount bet on the winning team (User Winnings = (User Bet / Total Winning Bets) * Total Pool)
+
+  -The contract automatically distributes ETH to winning users.
+
+  -Transparent and automated
