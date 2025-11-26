@@ -6,6 +6,10 @@ contract betting{
     bool betplaced;  // if true, that person already voted
     address owner;
   }
+  struct team{
+    address team;
+    uint score;
+  }
   struct game{
     uint payoutpool; // funds from the betters that fund the payout
     bool game_over; // if true game over
@@ -15,11 +19,11 @@ contract betting{
       }
     }
     //Determines which team wins
-    address team1;
-    address team2;
-    function winner(){
+    team team1;
+    team team2;
+    function display results(){
       if(game_over){
-        winner=max(team1,team2)
+        winner=max(team1.score,team2.score)
       }
     }
   }
