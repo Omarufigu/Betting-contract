@@ -1,9 +1,16 @@
-# Contributers
+# Contributersz
+
+Repo: https://github.com/Omarufigu/Betting-contract/tree/main
+
 Omar: omar.figueroa890@myhunter.cuny.edu
 
 Zayn: zayn.iqbal86@myhunter.cuny.edu
 
 Andre: andre.olfindo80@myhunter.cuny.edu
+
+Stanley: imstanleylam@gmail.com
+
+Jiahao: Jiahao.lin95@myhunter.cuny.edu
 
 # Betting Contract
 A contract for a sports betting system, similar to Kalshi. This contract allows users to place bets on live sports events using Ethereum (ETH).
