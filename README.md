@@ -1,4 +1,4 @@
-# Contributersz
+# Contributers
 
 Repo: https://github.com/Omarufigu/Betting-contract/tree/main
 
