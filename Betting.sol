@@ -2,12 +2,18 @@ pragma solidity ^0.8.20;
 
 
 contract SportsBetting {
+    // ==================== Access Control ====================
+    // Owner and permission management
+
     address public owner;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "not owner");
         _;
     }
+
+    // ==================== Reentrancy Protection ====================
+    // Guard against reentrancy attacks
 
     bool private locked;
     modifier nonReentrant() {
@@ -17,9 +23,15 @@ contract SportsBetting {
         locked = false;
     }
 
+    // ==================== Initialization ====================
+    // Constructor to set contract owner
+
     constructor() {
         owner = msg.sender;
     }
+
+    // ==================== Data Structures ====================
+    // Structs defining Game and Bet data models
 
     struct Game {
         uint256 id;
@@ -39,9 +51,15 @@ contract SportsBetting {
         bool claimed;         
     }
 
+    // ==================== State Variables ====================
+    // Game tracking and user bet mappings
+
     uint256 public nextGameId;
     mapping(uint256 => Game) public games;                  
     mapping(uint256 => mapping(address => Bet)) public bets; 
+
+    // ==================== Events ====================
+    // Contract events for logging state changes and user actions
 
     event GameCreated(uint256 indexed gameId, string teamA, string teamB);
     event BetPlaced(uint256 indexed gameId, address indexed user, uint8 team, uint256 amount);
@@ -49,10 +67,16 @@ contract SportsBetting {
     event GameResolved(uint256 indexed gameId, uint8 winningTeam);
     event WinningsWithdrawn(uint256 indexed gameId, address indexed user, uint256 amount);
 
+    // ==================== Custom Modifiers ====================
+    // Game validation and existence checks
+
     modifier gameExists(uint256 gameId) {
         require(gameId < nextGameId, "game does not exist");
         _;
     }
+
+    // ==================== Game Management Functions ====================
+    // Functions for creating games and managing their lifecycle states
 
     function createGame(string calldata teamA, string calldata teamB) external onlyOwner {
         uint256 gameId = nextGameId;
@@ -73,6 +97,9 @@ contract SportsBetting {
 
         emit GameCreated(gameId, teamA, teamB);
     }
+
+    // ==================== Betting Functions ====================
+    // Functions for users to place bets on games
 
     function placeBet(uint256 gameId, uint8 team)
         external
@@ -101,6 +128,9 @@ contract SportsBetting {
         emit BetPlaced(gameId, msg.sender, team, msg.value);
     }
 
+    // ==================== Game State Functions ====================
+    // Functions for closing games and setting results (owner only)
+
     function closeGame(uint256 gameId)
         external
         onlyOwner
@@ -115,6 +145,8 @@ contract SportsBetting {
         emit GameClosed(gameId);
     }
 
+    // ==================== Game Resolution Functions ====================
+    // Functions for owner to resolve games and set winning outcomes
 
     function setResult(uint256 gameId, uint8 winningTeam)
         external
@@ -133,6 +165,9 @@ contract SportsBetting {
 
         emit GameResolved(gameId, winningTeam);
     }
+
+    // ==================== Payout Calculation Functions ====================
+    // Functions for calculating user winnings based on game results
 
     function pendingWinnings(uint256 gameId, address user)
         public
@@ -166,6 +201,9 @@ contract SportsBetting {
         return payout;
     }
 
+    // ==================== View Functions ====================
+    // Functions for querying game information and user data
+
     function GameInfo(uint256 gameId)
         external
         view
@@ -188,7 +226,10 @@ contract SportsBetting {
             game.winningTeam,
             game.totalPool
         );
-    }   
+    }
+
+    // ==================== Withdrawal Functions ====================
+    // Functions for users and owner to withdraw funds
 
     function cashout(uint256 gameId)
         external
@@ -206,6 +247,9 @@ contract SportsBetting {
 
         emit WinningsWithdrawn(gameId, msg.sender, amount);
     }
+
+    // ==================== Emergency Functions ====================
+    // Administrative functions for contract maintenance and emergency scenarios
 
     function emergencyWithdraw(address payable to, uint256 amount)
         external
