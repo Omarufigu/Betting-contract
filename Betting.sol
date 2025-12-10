@@ -166,6 +166,30 @@ contract SportsBetting {
         return payout;
     }
 
+    function GameInfo(uint256 gameId)
+        external
+        view
+        gameExists(gameId)
+            returns (
+            string memory teamA,
+            string memory teamB,
+            bool isOpen,
+            bool isResolved,
+            uint8 winningTeam,
+            uint256 totalPool
+        )
+    {
+        Game storage game = games[gameId];
+        return (
+            game.teamA,
+            game.teamB,
+            game.isOpen,
+            game.isResolved,
+            game.winningTeam,
+            game.totalPool
+        );
+    }   
+
     function cashout(uint256 gameId)
         external
         nonReentrant
