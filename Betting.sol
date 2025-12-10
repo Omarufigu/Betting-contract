@@ -78,6 +78,10 @@ contract SportsBetting {
     // ==================== Game Management Functions ====================
     // Functions for creating games and managing their lifecycle states
 
+    /// @notice Creates a new betting game with two teams
+    /// @param teamA The name of the first team
+    /// @param teamB The name of the second team
+    /// @dev Only owner can create games. Initializes game with empty pools and open status.
     function createGame(string calldata teamA, string calldata teamB) external onlyOwner {
         uint256 gameId = nextGameId;
 
@@ -101,6 +105,11 @@ contract SportsBetting {
     // ==================== Betting Functions ====================
     // Functions for users to place bets on games
 
+    /// @notice Allows users to place a bet on a specific team in an open game
+    /// @param gameId The ID of the game to bet on
+    /// @param team The team to bet on (1 or 2)
+    /// @dev Requires ETH to be sent with the transaction. Game must be open and unresolved.
+    ///      Updates user's bet amount and game pool totals.
     function placeBet(uint256 gameId, uint8 team)
         external
         payable
@@ -131,6 +140,10 @@ contract SportsBetting {
     // ==================== Game State Functions ====================
     // Functions for closing games and setting results (owner only)
 
+    /// @notice Closes a game to prevent further betting
+    /// @param gameId The ID of the game to close
+    /// @dev Only owner can call. Game must be open and unresolved.
+    ///      Must be closed before setting the result.
     function closeGame(uint256 gameId)
         external
         onlyOwner
@@ -148,6 +161,11 @@ contract SportsBetting {
     // ==================== Game Resolution Functions ====================
     // Functions for owner to resolve games and set winning outcomes
 
+    /// @notice Sets the winning team and resolves a closed game
+    /// @param gameId The ID of the game to resolve
+    /// @param winningTeam The winning team (1 or 2)
+    /// @dev Only owner can call. Game must be closed and not already resolved.
+    ///      Once set, users can claim their winnings if they bet on the winning team.
     function setResult(uint256 gameId, uint8 winningTeam)
         external
         onlyOwner
@@ -169,6 +187,11 @@ contract SportsBetting {
     // ==================== Payout Calculation Functions ====================
     // Functions for calculating user winnings based on game results
 
+    /// @notice Calculates the pending winnings for a user in a resolved game
+    /// @param gameId The ID of the game to calculate winnings for
+    /// @param user The address of the user
+    /// @return The amount of ETH the user can withdraw (0 if game not resolved, already claimed, or user didn't bet on winner)
+    /// @dev Calculates payout as: (total_pool * user_bet) / total_winning_bets
     function pendingWinnings(uint256 gameId, address user)
         public
         view
@@ -204,6 +227,14 @@ contract SportsBetting {
     // ==================== View Functions ====================
     // Functions for querying game information and user data
 
+    /// @notice Retrieves detailed information about a specific game
+    /// @param gameId The ID of the game to query
+    /// @return teamA The name of the first team
+    /// @return teamB The name of the second team
+    /// @return isOpen Whether the game is still accepting bets
+    /// @return isResolved Whether the game result has been set
+    /// @return winningTeam The winning team (0 if unresolved)
+    /// @return totalPool The total amount of ETH bet on the game
     function GameInfo(uint256 gameId)
         external
         view
@@ -231,6 +262,10 @@ contract SportsBetting {
     // ==================== Withdrawal Functions ====================
     // Functions for users and owner to withdraw funds
 
+    /// @notice Allows a user to claim and withdraw their winnings from a resolved game
+    /// @param gameId The ID of the game to cash out from
+    /// @dev Protected against reentrancy attacks. Marks winnings as claimed before transferring funds.
+    ///      Only users who bet on the winning team and haven't already claimed can withdraw.
     function cashout(uint256 gameId)
         external
         nonReentrant
@@ -251,6 +286,10 @@ contract SportsBetting {
     // ==================== Emergency Functions ====================
     // Administrative functions for contract maintenance and emergency scenarios
 
+    /// @notice Allows owner to withdraw ETH from the contract for emergency purposes
+    /// @param to The address to send ETH to (must not be zero address)
+    /// @param amount The amount of ETH to withdraw
+    /// @dev Only owner can call. Checks sufficient balance before transfer.
     function emergencyWithdraw(address payable to, uint256 amount)
         external
         onlyOwner
